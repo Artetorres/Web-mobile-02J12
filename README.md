@@ -23,4 +23,4 @@ gestão de aprendizagem e fortalecendo o vínculo entre instituição e alunos.
 # 3.Grupo
 João Henrique Pereira Amaral - RA: 10737510\
 Heitor Assis Duenhas - RA: 10739294\
-Github - https://github.com/Artetorres/Web-mobile-02J12\
+Github - https://github.com/Artetorres/Web-mobile-02J12
