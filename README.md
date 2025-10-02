@@ -20,7 +20,17 @@ digital e acesso a recursos de planejamento e acompanhamento de desempenho
 acadêmico.
 Além disso, o projeto poderá ser expandido para colégios e universidades, auxiliando na
 gestão de aprendizagem e fortalecendo o vínculo entre instituição e alunos.
-# 3.Grupo
+# 3.Código
+## 3.1 Estrutura HTML (main.html)
+ O arquivo **HTML** é a base da aplicação, responsável por estruturar o conteúdo que será exibido no navegador. No documento enviado temos os seguintes elementos principais: 
+• Cabeçalho (header): Contém o logotipo e o menu de navegação. 
+• Menu (nav): Links de acesso às seções (Dashboard, Minhas Matérias, Minhas Metas, Estatísticas e Perfil). 
+• Conteúdo principal (main): Possui as seções de apresentação e os quadros de tarefas, metas e estatísticas. 
+• Botão (button 'Novo +'): Permite adicionar novas tarefas ou metas. 
+• Quadros (section/aside): Organizam o layout, exibindo tarefas, metas, estatísticas e eventos. 
+• Rodapé (footer): Contém o aviso de direitos autorais do sistema. 
+
+# 4.Grupo
 João Henrique Pereira Amaral - RA: 10737510\
 Heitor Assis Duenhas - RA: 10739294\
 Github - https://github.com/Artetorres/Web-mobile-02J12
