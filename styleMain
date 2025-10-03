@@ -1,0 +1,226 @@
+/* Variáveis globais */
+:root {
+    --bg: #f6f7f8;
+    --card: #fff;
+    --muted: #6b7280;
+    --text: #0f172a;
+    --primary: #3b82f6;
+    --accent: #10b981;
+    --shadow: 0 6px 18px rgba(15,23,42,0.06);
+    --gap: 20px;
+    --max: 1100px;
+}
+
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    font-family: Inter, system-ui, sans-serif;
+}
+
+body {
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.4;
+    max-width: var(--max);
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* Main cresce para empurrar o rodapé para baixo */
+main {
+    flex: 1;
+    padding-bottom: 70px;
+}
+
+/* Cabeçalho fixo */
+.cabecalho {
+    position: sticky;
+    top: 0;
+    background-color: var(--bg);
+    height: 80px;
+    display: flex;
+    justify-content: space-between; 
+    align-items: center;
+    border-bottom: 1px solid rgba(15,23,42,0.05);
+    padding: 0 10px;
+    z-index: 10;
+}
+
+/* Menu de navegação */
+.menu {
+    display: flex;
+    gap: 8px;
+}
+.menu a {
+    margin: 14px;
+    text-decoration: none;
+    color: var(--muted);
+    transition: color 0.3s ease;
+}
+.menu a:hover {
+    color: var(--primary);
+    cursor: pointer;
+}
+
+/* Imagens do cabeçalho */
+img {
+    height: 30px;
+    width: auto;
+}
+
+/* Cabeçalho da página */
+.cabecalho-pagina {
+    margin: 40px 0 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
+}
+.titulo h1 {
+    margin: 0;
+    font-size: 28px;
+}
+.titulo p {
+    margin: 6px 0 0;
+    color: var(--muted);
+}
+
+.botao {
+    height: 45px;
+    min-width: 110px;
+    border-radius: 10px;
+    border: 2px solid var(--primary);
+    background-color: transparent;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    font-weight: 600;
+}
+.botao:hover {
+    background-color: var(--primary);
+    color: white;
+    cursor: pointer;
+}
+
+.quadros {
+    display: grid;
+    grid-template-columns: 1fr 350px;
+    gap: 24px;
+    align-items: start;
+}
+
+/* Quadros */
+.quadro-esquerda, .quadro-direita {
+    background: var(--card);
+    border-radius: 14px;
+    box-shadow: var(--shadow);
+    padding: 20px;
+    border: 1px solid rgba(15,23,42,0.04);
+    width: 100%;
+    box-sizing: border-box;
+    margin-bottom: 20px;
+}
+
+/* Títulos e textos */
+.subtitulo {
+    margin: 0 0 8px;
+    font-size: 18px;
+}
+.escondido {
+    color: var(--muted);
+    font-size: 15px;
+}
+
+/* Checklist de tarefas/metas */
+.checklist {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 0;
+    margin: 0;
+}
+.checklist-item {
+    padding: 12px;
+    border-radius: 10px;
+    border: 1px solid rgba(15,23,42,0.05);
+    transition: background-color 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.checklist-item:hover {
+    background-color: rgba(194, 209, 224, 0.18);
+    cursor: pointer;
+}
+
+/* Checkbox customizado */
+.checkbox {
+    display: none; 
+}
+.checkbox + label {
+    cursor: pointer;
+    user-select: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+}
+/* quadradinho do checkbox */
+.checkbox + label:before {
+    content: '';
+    width: 18px;
+    height: 18px;
+    border-radius: 6px;
+    background-color: var(--card);
+    border: 2px solid rgba(15,23,42,0.08);
+    display: inline-block;
+}
+/* estilo quando marcado */
+.checkbox:checked + label:before {
+    border: 2px solid var(--accent);
+    background-color: #d1fae5;
+}
+
+.lista {
+    display: flex;
+    flex-direction: column;
+    list-style: none;
+    padding: 0;       
+    margin: 0;  
+}
+.lista-item {
+    margin: 5px 0 0 0;
+}
+#lista-eventos {
+    width: 100%;
+}
+
+.rodape {
+    width: 100%;
+    background: #6b7280;
+    color: black;  
+    text-align: center;
+    padding: 15px;
+    font-weight: 500;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    border-top: 1px solid rgba(0,0,0,0.05);
+}
+
+/* Responsividade: em telas menores vira 1 coluna */
+@media (max-width: 900px) {
+    .quadros {
+        grid-template-columns: 1fr;
+    }
+    .cabecalho-pagina {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+    }
+    .botao {
+        align-self: stretch;
+        width: auto;
+    }
+}
