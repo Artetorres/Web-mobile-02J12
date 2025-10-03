@@ -1,0 +1,132 @@
+// Executa o código apenas depois que o HTML for completamente carregado
+document.addEventListener("DOMContentLoaded", () => {
+  const botaoNovo = document.querySelector(".botao");
+  const listaTarefas = document.getElementById("lista-tarefas");
+  const listaMetas = document.getElementById("lista-metas");
+  const estatisticas = document.getElementById("lista-eventos");
+
+  // Variáveis de controle (quantidade total e concluídas)
+  let totalTarefas = 0, concluidasTarefas = 0;
+  let totalMetas = 0, concluidasMetas = 0;
+
+  // Contadores para gerar IDs únicos de cada item
+  let contadorTarefas = 0;
+  let contadorMetas = 0;
+
+  // Função que cria uma barra de progresso
+  function criarBarra(titulo, cor) {
+    const container = document.createElement("div");
+    container.style.marginBottom = "16px";
+
+    // Cria o texto acima da barra
+    const label = document.createElement("p");
+    label.textContent = titulo;
+    label.style.margin = "0 0 6px";
+    label.style.fontWeight = "500";
+
+    // Container da barra
+    const barraContainer = document.createElement("div");
+    barraContainer.style.width = "100%";
+    barraContainer.style.height = "20px";
+    barraContainer.style.backgroundColor = "#e5e7eb";
+    barraContainer.style.borderRadius = "10px";
+    barraContainer.style.overflow = "hidden";
+
+    // Parte interna da barra (preenchimento que cresce com progresso)
+    const barra = document.createElement("div");
+    barra.style.height = "100%";
+    barra.style.width = "0%"; 
+    barra.style.backgroundColor = cor;
+    barra.style.transition = "width 0.3s ease"; 
+
+    // Montagem da barra
+    barraContainer.appendChild(barra);
+    container.appendChild(label);
+    container.appendChild(barraContainer);
+
+    // Adiciona dentro da seção de estatísticas
+    estatisticas.appendChild(container);
+    return barra; 
+  }
+
+  // Criando duas barras: uma para tarefas e outra para metas
+  const barraTarefas = criarBarra("Progresso - Tarefas", "#3b82f6"); 
+  const barraMetas = criarBarra("Progresso - Metas", "#3b82f6"); 
+
+  // Atualiza a porcentagem de preenchimento das barras
+  function atualizarBarras() {
+    const percTarefas = totalTarefas === 0 ? 0 : (concluidasTarefas / totalTarefas) * 100;
+    const percMetas = totalMetas === 0 ? 0 : (concluidasMetas / totalMetas) * 100;
+
+    barraTarefas.style.width = `${percTarefas}%`;
+    barraMetas.style.width = `${percMetas}%`;
+  }
+
+  // Função que adiciona um novo item (tarefa ou meta)
+  function adicionarItem(lista, texto, tipo) {
+    let id;
+
+    // Define ID único e atualiza contadores
+    if (tipo === "tarefas") {
+      totalTarefas++;
+      contadorTarefas++;
+      id = "tarefa-" + contadorTarefas;
+    } else {
+      totalMetas++;
+      contadorMetas++;
+      id = "meta-" + contadorMetas;
+    }
+
+    // Cria o container do item
+    const div = document.createElement("div");
+    div.classList.add("checklist-item");
+
+    // Cria o checkbox
+    const checkbox = document.createElement("input");
+    checkbox.type = "checkbox";
+    checkbox.id = id;
+    checkbox.classList.add("checkbox");
+
+    // Cria o rótulo (texto da tarefa/meta)
+    const label = document.createElement("label");
+    label.setAttribute("for", id);
+    label.textContent = texto;
+
+    
+    div.appendChild(checkbox);
+    div.appendChild(label);
+
+    // Adiciona o item na lista correta (tarefas ou metas)
+    lista.appendChild(div);
+
+    // Quando o checkbox for marcado → conta como concluído
+    checkbox.addEventListener("change", () => {
+      if (checkbox.checked) {
+        if (tipo === "tarefas") concluidasTarefas++;
+        else concluidasMetas++;
+        
+        div.remove(); 
+        atualizarBarras();
+      }
+    });
+
+    atualizarBarras();
+  }
+
+  botaoNovo.addEventListener("click", () => {
+    
+    const escolha = prompt("Adicionar em: Tarefas ou Metas ?");
+    if (!escolha) return;
+    const texto = prompt("Adicionar descrição:");
+    if (!texto) return;
+
+    // Verifica se a escolha foi válida e adiciona no local certo
+    if (escolha === "tarefas".toLocaleUpperCase() || escolha === "tarefas".toLocaleLowerCase()) {
+      adicionarItem(listaTarefas, texto, "tarefas");
+    } else if (escolha === "metas".toLocaleUpperCase() || escolha === "metas".toLocaleLowerCase()) {
+      adicionarItem(listaMetas, texto, "metas");
+    } else {
+      alert("Opção inválida.");
+    }
+  });
+});
