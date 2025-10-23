@@ -1,5 +1,9 @@
 # Web-mobile-02J12
 projeto de web
+### 🚀 StudyFlow - Dashboard (Next.js/React)
+
+Este projeto representa a migração de um dashboard simples (originalmente em HTML, CSS e JavaScript puro) para a arquitetura moderna de componentes React utilizando o framework Next.js (App Router).
+/
 
 # 1. Ideação
 A primeira etapa para a criação do site foi a fase de ideação. Nesta etapa, reunimos
@@ -23,15 +27,10 @@ acadêmico.
 Além disso, o projeto poderá ser expandido para colégios e universidades, auxiliando na
 gestão de aprendizagem e fortalecendo o vínculo entre instituição e alunos.
 /
-## 3. Código
-# 🚀 StudyFlow - Dashboard (Next.js/React)
-
-Este projeto representa a migração de um dashboard simples (originalmente em HTML, CSS e JavaScript puro) para a arquitetura moderna de componentes React utilizando o framework Next.js (App Router).
-
-
+# 3. Código
 
 /
-### 3.1 Estrutura JSX (Componentes Next.js/React)
+## 3.1 Estrutura JSX (Componentes Next.js/React)
 
 O código foi dividido em componentes reutilizáveis, seguindo o princípio de separação de responsabilidades (Single Responsibility Principle - SRP):
 * Cabeçalho (`components/Header.jsx`): Contém o logotipo (agora referenciado via `/public`) e o menu de navegação. É importado no `layout.js`.
@@ -42,7 +41,7 @@ O código foi dividido em componentes reutilizáveis, seguindo o princípio de s
 * Rodapé (`components/Footer.jsx`): Contém o aviso de direitos autorais. É importado no `layout.js`.
 
 /
-### 3.2 Estilização com CSS (app/globals.css)
+## 3.2 Estilização com CSS (app/globals.css)
 
 Os estilos originais do `styleMain.css` foram copiados integralmente para o `app/globals.css`. Este arquivo é importado no `app/layout.js`, garantindo que os estilos sejam globais em toda a aplicação. Os principais pontos do estilo permanecem:
 * Uso de variáveis (`:root`): Define cores padrão, sombras, espaçamento e limites de largura.
@@ -53,7 +52,7 @@ Os estilos originais do `styleMain.css` foram copiados integralmente para o `app
 * Rodapé fixo: Sempre visível no final da tela através da classe `.rodape` com `position: fixed; bottom: 0;`.
 
 /
-### 3.3 Lógica com React/Next.js (`MainContent.jsx`)
+## 3.3 Lógica com React/Next.js (`MainContent.jsx`)
 
 A lógica foi refatorada do JS imperativo para o modelo de estado declarativo do React, mantendo a funcionalidade original:
 * Gerenciamento de Estado: O **`useState`** (`tarefas`, `metas`) substitui as variáveis globais. O sistema re-renderiza a interface automaticamente quando o estado é atualizado.
