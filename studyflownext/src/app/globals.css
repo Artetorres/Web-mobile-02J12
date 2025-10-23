@@ -1,4 +1,3 @@
-/* Variáveis globais */
 :root {
     --bg: #f6f7f8;
     --card: #fff;
@@ -6,10 +5,12 @@
     --text: #0f172a;
     --primary: #3b82f6;
     --accent: #10b981;
+    --radius: 14px;
     --shadow: 0 6px 18px rgba(15,23,42,0.06);
     --gap: 20px;
-    --max: 1100px;
+    --limite: 1100px;
 }
+
 
 html, body {
     height: 100%;
@@ -18,11 +19,12 @@ html, body {
     font-family: Inter, system-ui, sans-serif;
 }
 
+/* Layout principal */
 body {
     background: var(--bg);
     color: var(--text);
     line-height: 1.4;
-    max-width: var(--max);
+    max-width: var(--limite);
     margin: 0 auto;
     display: flex;
     flex-direction: column;
@@ -89,6 +91,7 @@ img {
     color: var(--muted);
 }
 
+
 .botao {
     height: 45px;
     min-width: 110px;
@@ -104,17 +107,18 @@ img {
     cursor: pointer;
 }
 
+/* Layout em duas colunas (esquerda/direita) */
 .quadros {
     display: grid;
-    grid-template-columns: 1fr 350px;
+    grid-template-columns: 1fr 350px; /* esquerda flexível + direita fixa */
     gap: 24px;
     align-items: start;
 }
 
-/* Quadros */
+/* Caixas de conteúdo (cards) */
 .quadro-esquerda, .quadro-direita {
     background: var(--card);
-    border-radius: 14px;
+    border-radius: var(--radius);
     box-shadow: var(--shadow);
     padding: 20px;
     border: 1px solid rgba(15,23,42,0.04);
@@ -157,7 +161,7 @@ img {
 
 /* Checkbox customizado */
 .checkbox {
-    display: none; 
+    display: none; /* esconde o checkbox padrão */
 }
 .checkbox + label {
     cursor: pointer;
@@ -182,6 +186,7 @@ img {
     background-color: #d1fae5;
 }
 
+/* Lista de eventos */
 .lista {
     display: flex;
     flex-direction: column;
@@ -196,6 +201,7 @@ img {
     width: 100%;
 }
 
+/* Rodapé fixo */
 .rodape {
     width: 100%;
     background: #6b7280;
