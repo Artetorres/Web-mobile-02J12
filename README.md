@@ -29,7 +29,7 @@ gestão de aprendizagem e fortalecendo o vínculo entre instituição e alunos.
 /
 # 3. Código
 
-/
+
 ## 3.1 Estrutura JSX (Componentes Next.js/React)
 
 O código foi dividido em componentes reutilizáveis, seguindo o princípio de separação de responsabilidades (Single Responsibility Principle - SRP):
@@ -40,7 +40,7 @@ O código foi dividido em componentes reutilizáveis, seguindo o princípio de s
 * Quadros (`MainContent.jsx`): Organizam o layout, sendo preenchidos por mapeamento do estado (`tarefas.map`) e usando `useRef` para injetar as barras de progresso.
 * Rodapé (`components/Footer.jsx`): Contém o aviso de direitos autorais. É importado no `layout.js`.
 
-/
+
 ## 3.2 Estilização com CSS (app/globals.css)
 
 Os estilos originais do `styleMain.css` foram copiados integralmente para o `app/globals.css`. Este arquivo é importado no `app/layout.js`, garantindo que os estilos sejam globais em toda a aplicação. Os principais pontos do estilo permanecem:
@@ -51,7 +51,7 @@ Os estilos originais do `styleMain.css` foram copiados integralmente para o `app
 * Quadros (cards): Apresentam sombra (`var(--shadow)`), bordas arredondadas e espaçamento interno.
 * Rodapé fixo: Sempre visível no final da tela através da classe `.rodape` com `position: fixed; bottom: 0;`.
 
-/
+
 ## 3.3 Lógica com React/Next.js (`MainContent.jsx`)
 
 A lógica foi refatorada do JS imperativo para o modelo de estado declarativo do React, mantendo a funcionalidade original:
