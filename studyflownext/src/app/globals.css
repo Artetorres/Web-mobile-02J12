@@ -215,6 +215,53 @@ img {
     border-top: 1px solid rgba(0,0,0,0.05);
 }
 
+/* --- Estilo Específico para o Nome da Matéria na Lista --- */
+/* ... (Seu código anterior para .materia-nome e .checkbox-placeholder-materia) ... */
+
+
+/* NOVO: Remove o sublinhado do link */
+.checklist-item {
+    text-decoration: none; /* Remove o sublinhado no container inteiro (que é o link) */
+}
+
+/* Opcional: Garante que o texto dentro do link também não tenha sublinhado */
+.checklist-item a {
+    text-decoration: none;
+}
+/* --- Estilo Específico para o Nome da Matéria na Lista --- */
+
+.materia-nome {
+    font-weight: 500; 
+    color: var(--text); 
+    transition: color 0.2s ease;
+    flex-grow: 1;
+}
+
+.checklist-item:hover .materia-nome {
+    color: var(--primary); 
+}
+
+
+/* --- Placeholder para o "quadradinho" da Matéria (Simula o Checkbox) --- */
+
+.checkbox-placeholder-materia {
+    content: '';
+    /* Usa as mesmas dimensões e estilos do checkbox original */
+    width: 18px;
+    min-width: 18px; /* Adiciona min-width para não encolher */
+    height: 18px;
+    border-radius: 6px;
+    background-color: var(--bg); /* Cor de fundo */
+    border: 2px solid rgba(15,23,42,0.08);
+    display: inline-block;
+}
+
+/* Opcional: Efeito visual ao passar o mouse */
+.checklist-item:hover .checkbox-placeholder-materia {
+    border-color: var(--primary);
+    background-color: var(--card);
+}
+
 /* Responsividade: em telas menores vira 1 coluna */
 @media (max-width: 900px) {
     .quadros {

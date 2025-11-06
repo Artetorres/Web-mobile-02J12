@@ -1,84 +1,24 @@
-'use client'; // Indica que este componente deve ser renderizado no lado do cliente.
+'use client'; 
 
-import React, { useState, useEffect, useRef } from 'react';
-
-
+import React, { useState, useRef } from 'react';
+import ProgressBar from './ProgressBar'; 
 
 export default function MainContent() {
   // Estados para Tarefas e Metas (lista de objetos)
   const [tarefas, setTarefas] = useState([]);
   const [metas, setMetas] = useState([]);
   
-  // Contadores para o progresso
   const totalTarefas = tarefas.length;
   const concluidasTarefas = tarefas.filter(t => t.concluida).length;
   const totalMetas = metas.length;
   const concluidasMetas = metas.filter(m => m.concluida).length;
 
   
-  const barraTarefasRef = useRef(null);
-  const barraMetasRef = useRef(null);
-  const estatisticasRef = useRef(null);
+  const estatisticasRef = useRef(null); 
   
-  // Contadores para gerar IDs únicos (para fins de persistência/chave)
   const contadorTarefasRef = useRef(0);
   const contadorMetasRef = useRef(0);
 
-
-  // Função que cria uma barra de progresso
-  const criarBarra = (titulo, cor, ref) => {
-    if (!estatisticasRef.current) return;
-    
-   
-    const container = document.createElement("div");
-    container.style.marginBottom = "16px";
-
-    const label = document.createElement("p");
-    label.textContent = titulo;
-    label.style.margin = "0 0 6px";
-    label.style.fontWeight = "500";
-
-    const barraContainer = document.createElement("div");
-    barraContainer.style.width = "100%";
-    barraContainer.style.height = "20px";
-    barraContainer.style.backgroundColor = "#e5e7eb";
-    barraContainer.style.borderRadius = "10px";
-    barraContainer.style.overflow = "hidden";
-
-    const barra = document.createElement("div");
-    barra.style.height = "100%";
-    barra.style.width = "0%";
-    barra.style.backgroundColor = cor;
-    barra.style.transition = "width 0.3s ease";
-
-    barraContainer.appendChild(barra);
-    container.appendChild(label);
-    container.appendChild(barraContainer);
-
-    estatisticasRef.current.appendChild(container);
-    ref.current = barra; // Salva a referência para o preenchimento da barra
-  };
-  
-  // Inicialização das barras de progresso
-  useEffect(() => {
-    criarBarra("Progresso - Tarefas", "#3b82f6", barraTarefasRef);
-    criarBarra("Progresso - Metas", "#3b82f6", barraMetasRef);
-  }, []); // [] garante que rode apenas na montagem
-
-  // Atualiza as barras de progresso sempre que as listas mudam
-  useEffect(() => {
-    const percTarefas = totalTarefas === 0 ? 0 : (concluidasTarefas / totalTarefas) * 100;
-    const percMetas = totalMetas === 0 ? 0 : (concluidasMetas / totalMetas) * 100;
-
-    if (barraTarefasRef.current) {
-      barraTarefasRef.current.style.width = `${percTarefas}%`;
-    }
-    if (barraMetasRef.current) {
-      barraMetasRef.current.style.width = `${percMetas}%`;
-    }
-  }, [totalTarefas, concluidasTarefas, totalMetas, concluidasMetas]);
-
-  // Função para adicionar um novo item (chamada pelo onClick do botão)
   const handleAdicionarItem = () => {
     const escolha = prompt("Adicionar em: Tarefas ou Metas ?");
     if (!escolha) return;
@@ -109,41 +49,44 @@ export default function MainContent() {
     }
   };
   
-  // Função para marcar como concluído (chamada pelo onChange do checkbox)
+
   const handleConcluirItem = (id, tipo) => {
-   
     if (tipo === 'tarefas') {
-      setTarefas(prev => prev.filter(t => t.id !== id));
+      setTarefas(prev => 
+        prev.map(t => t.id === id ? { ...t, concluida: !t.concluida } : t)
+      );
     } else if (tipo === 'metas') {
-      setMetas(prev => prev.filter(m => m.id !== id));
+      setMetas(prev => 
+        prev.map(m => m.id === id ? { ...m, concluida: !m.concluida } : m)
+      );
     }
   };
 
 
-  // Componente Auxiliar para renderizar um item 
   const CheckListItem = ({ item, tipo, onConcluir }) => (
     <div className="checklist-item">
       <input 
         type="checkbox" 
         id={item.id} 
         className="checkbox" 
+        checked={item.concluida} 
         onChange={() => onConcluir(item.id, tipo)}
       />
-      <label htmlFor={item.id}>{item.texto}</label>
+      <label htmlFor={item.id} style={item.concluida ? { textDecoration: 'line-through', color: '#9ca3af' } : {}}>
+        {item.texto}
+      </label>
     </div>
   );
 
 
-  // Renderização do JSX
   return (
     <section>
-        {/* Cabeçalho da página  */}
+        {/* Cabeçalho da página (sem alterações) */}
         <section className="cabecalho-pagina">
             <div className="titulo">
                 <h1>Olá, Estudante!</h1>
                 <p>Seja bem vindo ao seu espaço de estudos. Vamos fazer mais um dia produtivo!</p>
             </div>
-            {/* Botão com o handler de clique */}
             <button className="botao" onClick={handleAdicionarItem}>Novo +</button>
         </section>
 
@@ -151,7 +94,7 @@ export default function MainContent() {
         <section className="quadros">
             {/* Coluna esquerda */}
             <aside>
-                {/* Lista de tarefas do dia */}
+                {/* Lista de tarefas do dia (sem alterações) */}
                 <section className="quadro-esquerda">
                     <h3 className="subtitulo">Hoje <span className="escondido">• {totalTarefas} Tarefas</span></h3>
                     <form className="checklist" id="lista-tarefas">
@@ -166,7 +109,7 @@ export default function MainContent() {
                     </form>
                 </section>
 
-                {/* Lista de metas */}
+                {/* Lista de metas (sem alterações) */}
                 <section className="quadro-esquerda">
                     <h3 className="subtitulo">Metas</h3>
                     <form className="checklist" id="lista-metas">
@@ -181,14 +124,33 @@ export default function MainContent() {
                     </form>
                 </section>
                 
-                {/* Estatísticas */}
+                {/* Estatísticas (TOTALMENTE SUBSTITUÍDO) */}
                 <section className="quadro-direita">
                     <h3 className="subtitulo">Estatisticas</h3>
-                    <ul className="lista" ref={estatisticasRef} id="lista-eventos"></ul>
+                    {/* A "ul" agora é apenas um container para os componentes ProgressBar */}
+                    <div className="lista" ref={estatisticasRef} id="lista-eventos">
+                        
+                        {/* NOVO: Componente React para a barra de Tarefas */}
+                        <ProgressBar
+                            titulo="Progresso - Tarefas"
+                            total={totalTarefas}
+                            concluidos={concluidasTarefas}
+                            cor="#3b82f6" 
+                        />
+
+                        {/* NOVO: Componente React para a barra de Metas */}
+                         <ProgressBar
+                            titulo="Progresso - Metas"
+                            total={totalMetas}
+                            concluidos={concluidasMetas}
+                            cor="#10b981" /* Mudei a cor para diferenciar */
+                        />
+
+                    </div>
                 </section>
             </aside>
 
-            {/* Coluna direita */}
+            {/* Coluna direita (sem alterações) */}
             <aside>
                 {/* Mostra próxima tarefa */}
                 <section className="quadro-direita">
