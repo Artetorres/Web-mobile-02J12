@@ -1,5 +1,9 @@
 # Web-mobile-02J12
 projeto de web
+### 🚀 StudyFlow - Dashboard (Next.js/React)
+
+Este projeto representa a migração de um dashboard simples (originalmente em HTML, CSS e JavaScript puro) para a arquitetura moderna de componentes React utilizando o framework Next.js (App Router).
+/
 
 # 1. Ideação
 A primeira etapa para a criação do site foi a fase de ideação. Nesta etapa, reunimos
@@ -22,33 +26,40 @@ digital e acesso a recursos de planejamento e acompanhamento de desempenho
 acadêmico.
 Além disso, o projeto poderá ser expandido para colégios e universidades, auxiliando na
 gestão de aprendizagem e fortalecendo o vínculo entre instituição e alunos.
-# 3.Código
-## 3.1 Estrutura HTML (main.html)
- O arquivo **HTML** é a base da aplicação, responsável por estruturar o conteúdo que será exibido no navegador. No documento enviado temos os seguintes elementos principais: \
-• Cabeçalho (header): Contém o logotipo e o menu de navegação.\ 
-• Menu (nav): Links de acesso às seções (Dashboard, Minhas Matérias, Minhas Metas, Estatísticas e Perfil).\ 
-• Conteúdo principal (main): Possui as seções de apresentação e os quadros de tarefas, metas e estatísticas.\ 
-• Botão (button 'Novo +'): Permite adicionar novas tarefas ou metas. \
-• Quadros (section/aside): Organizam o layout, exibindo tarefas, metas, estatísticas e eventos.\ 
-• Rodapé (footer): Contém o aviso de direitos autorais do sistema. 
+/
+# 3. Código
 
-## 3.2 Estilização com CSS (styleMain.css)
-O arquivo **CSS** define o estilo visual da página. Ele controla cores, espaçamento, tipografia e posicionamento dos elementos. Os principais pontos são:\
-• Uso de variáveis (root): Define cores padrão, sombras, espaçamento e limites de largura.\ 
-• Layout responsivo: Com uso de grid e media queries para ajustar em telas menores.\ 
-• Cabeçalho fixo: Mantém o menu visível no topo da página.\ 
-• Botão estilizado: O botão 'Novo +' muda de cor ao passar o mouse (hover).\
-• Quadros (cards): Apresentam sombra, bordas arredondadas e espaçamento interno.\ 
-• Rodapé fixo: Sempre visível no final da tela.
 
-## 3.3 Funcionalidade com JavaScript (mainScript.js)
-O arquivo **JavaScript** adiciona interatividade à aplicação. No documento enviado, ele é responsável por:\ 
-• Esperar o carregamento da página (DOMContentLoaded) antes de rodar o código.\ 
-• Selecionar os elementos principais (botão, listas de tarefas e metas, estatísticas).\ 
-• Criar barras de progresso dinâmicas para tarefas e metas.\ 
-• Adicionar itens (tarefas ou metas) com prompts de texto.\ 
-• Remover itens quando concluídos (checkbox marcado).\ 
-• Atualizar automaticamente as barras de progresso com base nas tarefas/metas concluídas. 
+## 3.1 Estrutura JSX (Componentes Next.js/React)
+
+O código foi dividido em componentes reutilizáveis, seguindo o princípio de separação de responsabilidades (Single Responsibility Principle - SRP):
+* Cabeçalho (`components/Header.jsx`): Contém o logotipo (agora referenciado via `/public`) e o menu de navegação. É importado no `layout.js`.
+* Menu (`Header.jsx`): Links de acesso às seções (Dashboard, Minhas Matérias, Minhas Metas, Estatísticas e Perfil).
+* Conteúdo principal (`components/MainContent.jsx`): É o componente **Client-side** principal, contendo toda a lógica de estado e a renderização dos quadros dinâmicos.
+* Botão (`MainContent.jsx`): O botão 'Novo +' agora chama a função `handleAdicionarItem` para iniciar a lógica de estado.
+* Quadros (`MainContent.jsx`): Organizam o layout, sendo preenchidos por mapeamento do estado (`tarefas.map`) e usando `useRef` para injetar as barras de progresso.
+* Rodapé (`components/Footer.jsx`): Contém o aviso de direitos autorais. É importado no `layout.js`.
+
+
+## 3.2 Estilização com CSS (app/globals.css)
+
+Os estilos originais do `styleMain.css` foram copiados integralmente para o `app/globals.css`. Este arquivo é importado no `app/layout.js`, garantindo que os estilos sejam globais em toda a aplicação. Os principais pontos do estilo permanecem:
+* Uso de variáveis (`:root`): Define cores padrão, sombras, espaçamento e limites de largura.
+* Layout responsivo: Com uso de grid (`.quadros`) e *media queries* para ajustar em telas menores.
+* Cabeçalho fixo: Mantém o menu visível no topo da página através da classe `.cabecalho` com `position: sticky; top: 0;`.
+* Botão estilizado: O botão '.botao' usa `transition` para a mudança de cor no `hover`.
+* Quadros (cards): Apresentam sombra (`var(--shadow)`), bordas arredondadas e espaçamento interno.
+* Rodapé fixo: Sempre visível no final da tela através da classe `.rodape` com `position: fixed; bottom: 0;`.
+
+
+## 3.3 Lógica com React/Next.js (`MainContent.jsx`)
+
+A lógica foi refatorada do JS imperativo para o modelo de estado declarativo do React, mantendo a funcionalidade original:
+* Gerenciamento de Estado: O **`useState`** (`tarefas`, `metas`) substitui as variáveis globais. O sistema re-renderiza a interface automaticamente quando o estado é atualizado.
+* Lógica de Contagem: O **`useMemo`** é usado para calcular o progresso (`totalTarefas`, `concluidasMetas`) de forma eficiente, garantindo que o cálculo só ocorra quando o estado das listas mudar.
+* Lógica de DOM (Mimetismo): O **`useRef`** e o **`useEffect`** são usados para criar e gerenciar as barras de progresso via manipulação direta do DOM, espelhando o comportamento do `mainScript.js` original, mas sob o controle do ciclo de vida do componente.
+* Adição de Itens: A função `handleAdicionarItem` agora chama `setTarefas` ou `setMetas` (atualizando o estado), em vez de injetar HTML diretamente.
+* Remoção/Conclusão: A função `handleConcluirItem` usa a função `filter()` para **remover o item do estado**, acionando uma nova renderização (que, por sua vez, dispara a atualização das barras via `useEffect`).
 
 # 4.Grupo
 João Henrique Pereira Amaral - RA: 10737510\
