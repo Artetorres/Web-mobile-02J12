@@ -2,7 +2,6 @@ import React from 'react';
 
 export default function ProgressBar({ titulo, total, concluidos, cor = "#3b82f6" }) {
   
-  // Calcula a porcentagem
   const percentage = total === 0 ? 0 : (concluidos / total) * 100;
 
   return (
@@ -19,7 +18,6 @@ export default function ProgressBar({ titulo, total, concluidos, cor = "#3b82f6"
           overflow: "hidden"
         }}
       >
-        {/* A barra de preenchimento */}
         <div 
           style={{
             height: "100%",

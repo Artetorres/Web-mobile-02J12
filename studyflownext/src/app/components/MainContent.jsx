@@ -4,9 +4,15 @@ import React, { useState, useRef } from 'react';
 import ProgressBar from './ProgressBar'; 
 
 export default function MainContent() {
-  // Estados para Tarefas e Metas (lista de objetos)
+
   const [tarefas, setTarefas] = useState([]);
   const [metas, setMetas] = useState([]);
+
+  const [searchTerm, setSearchTerm] = useState('');
+  const [searchResult, setSearchResult] = useState(null);
+  const [dictLoading, setDictLoading] = useState(false);
+  const [dictError, setDictError] = useState(null);
+
   
   const totalTarefas = tarefas.length;
   const concluidasTarefas = tarefas.filter(t => t.concluida).length;
@@ -62,6 +68,39 @@ export default function MainContent() {
     }
   };
 
+  const handleSearchDicionario = async (e) => {
+    e.preventDefault();
+    if (!searchTerm) return;
+
+    setDictLoading(true);
+    setSearchResult(null);
+    setDictError(null);
+
+    try {
+      const response = await fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${searchTerm}`);
+      if (!response.ok) {
+        throw new Error('Palavra não encontrada ou falha na rede.');
+      }
+      const data = await response.json();
+      const definicao = data[0]?.meanings[0]?.definitions[0]?.definition;
+      const fonetica = data[0]?.phonetic;
+
+      if (definicao) {
+        setSearchResult({
+          palavra: data[0].word,
+          definicao: definicao,
+          fonetica: fonetica
+        });
+      } else {
+        throw new Error('Definição não encontrada na resposta.');
+      }
+
+    } catch (error) {
+      setDictError(error.message);
+    } finally {
+      setDictLoading(false);
+    }
+  };
 
   const CheckListItem = ({ item, tipo, onConcluir }) => (
     <div className="checklist-item">
@@ -81,7 +120,6 @@ export default function MainContent() {
 
   return (
     <section>
-        {/* Cabeçalho da página (sem alterações) */}
         <section className="cabecalho-pagina">
             <div className="titulo">
                 <h1>Olá, Estudante!</h1>
@@ -90,11 +128,8 @@ export default function MainContent() {
             <button className="botao" onClick={handleAdicionarItem}>Novo +</button>
         </section>
 
-        {/* Seção principal dividida em colunas */}
         <section className="quadros">
-            {/* Coluna esquerda */}
             <aside>
-                {/* Lista de tarefas do dia (sem alterações) */}
                 <section className="quadro-esquerda">
                     <h3 className="subtitulo">Hoje <span className="escondido">• {totalTarefas} Tarefas</span></h3>
                     <form className="checklist" id="lista-tarefas">
@@ -109,7 +144,6 @@ export default function MainContent() {
                     </form>
                 </section>
 
-                {/* Lista de metas (sem alterações) */}
                 <section className="quadro-esquerda">
                     <h3 className="subtitulo">Metas</h3>
                     <form className="checklist" id="lista-metas">
@@ -124,47 +158,56 @@ export default function MainContent() {
                     </form>
                 </section>
                 
-                {/* Estatísticas (TOTALMENTE SUBSTITUÍDO) */}
                 <section className="quadro-direita">
                     <h3 className="subtitulo">Estatisticas</h3>
-                    {/* A "ul" agora é apenas um container para os componentes ProgressBar */}
                     <div className="lista" ref={estatisticasRef} id="lista-eventos">
-                        
-                        {/* NOVO: Componente React para a barra de Tarefas */}
                         <ProgressBar
                             titulo="Progresso - Tarefas"
                             total={totalTarefas}
                             concluidos={concluidasTarefas}
                             cor="#3b82f6" 
                         />
-
-                        {/* NOVO: Componente React para a barra de Metas */}
                          <ProgressBar
                             titulo="Progresso - Metas"
                             total={totalMetas}
                             concluidos={concluidasMetas}
-                            cor="#10b981" /* Mudei a cor para diferenciar */
+                            cor="#10b981"
                         />
-
                     </div>
                 </section>
             </aside>
 
-            {/* Coluna direita (sem alterações) */}
             <aside>
-                {/* Mostra próxima tarefa */}
                 <section className="quadro-direita">
-                    <h3 className="subtitulo">Próxima tarefa</h3>
-                    <p className="escondido">Revisar calculo I</p>
-                </section>
-
-                {/* Próximos eventos */}
-                <section className="quadro-direita">
-                    <h3 className="subtitulo">Próximos eventos</h3>
-                    <ul className="lista">
-                        <li className="lista-item">Prova de calculo</li>
-                        <li className="lista-item">Prova de fisica</li>
-                    </ul>
+                    <h3 className="subtitulo">Dicionário (Inglês)</h3>
+                    <form className="dicionario-form" onSubmit={handleSearchDicionario}>
+                        <input 
+                            type="text"
+                            className="dicionario-input"
+                            placeholder="Digite uma palavra..."
+                            value={searchTerm}
+                            onChange={(e) => setSearchTerm(e.target.value)}
+                        />
+                        <button type="submit" className="dicionario-botao" disabled={dictLoading}>
+                            {dictLoading ? '...' : 'Buscar'}
+                        </button>
+                    </form>
+                    
+                    <div className="dicionario-resultado">
+                        {dictLoading && <p>Carregando...</p>}
+                        {dictError && <p style={{ color: 'red' }}>{dictError}</p>}
+                        {searchResult && (
+                            <>
+                                <h4 style={{ margin: '10px 0 5px' }}>
+                                  {searchResult.palavra} 
+                                  <span style={{ color: '#6b7280', fontWeight: '500', marginLeft: '8px' }}>
+                                    {searchResult.fonetica}
+                                  </span>
+                                </h4>
+                                <p style={{ margin: 0 }}>{searchResult.definicao}</p>
+                            </>
+                        )}
+                    </div>
                 </section>
             </aside>
         </section>

@@ -31,13 +31,11 @@ body {
     min-height: 100vh;
 }
 
-/* Main cresce para empurrar o rodapé para baixo */
 main {
     flex: 1;
     padding-bottom: 70px;
 }
 
-/* Cabeçalho fixo */
 .cabecalho {
     position: sticky;
     top: 0;
@@ -51,7 +49,6 @@ main {
     z-index: 10;
 }
 
-/* Menu de navegação */
 .menu {
     display: flex;
     gap: 8px;
@@ -67,13 +64,11 @@ main {
     cursor: pointer;
 }
 
-/* Imagens do cabeçalho */
 img {
     height: 30px;
     width: auto;
 }
 
-/* Cabeçalho da página */
 .cabecalho-pagina {
     margin: 40px 0 8px;
     display: flex;
@@ -107,15 +102,14 @@ img {
     cursor: pointer;
 }
 
-/* Layout em duas colunas (esquerda/direita) */
 .quadros {
     display: grid;
-    grid-template-columns: 1fr 350px; /* esquerda flexível + direita fixa */
+    grid-template-columns: 1fr 350px;
     gap: 24px;
     align-items: start;
 }
 
-/* Caixas de conteúdo (cards) */
+
 .quadro-esquerda, .quadro-direita {
     background: var(--card);
     border-radius: var(--radius);
@@ -127,7 +121,6 @@ img {
     margin-bottom: 20px;
 }
 
-/* Títulos e textos */
 .subtitulo {
     margin: 0 0 8px;
     font-size: 18px;
@@ -137,7 +130,6 @@ img {
     font-size: 15px;
 }
 
-/* Checklist de tarefas/metas */
 .checklist {
     display: flex;
     flex-direction: column;
@@ -159,9 +151,8 @@ img {
     cursor: pointer;
 }
 
-/* Checkbox customizado */
 .checkbox {
-    display: none; /* esconde o checkbox padrão */
+    display: none;
 }
 .checkbox + label {
     cursor: pointer;
@@ -170,7 +161,7 @@ img {
     align-items: center;
     gap: 10px;
 }
-/* quadradinho do checkbox */
+
 .checkbox + label:before {
     content: '';
     width: 18px;
@@ -180,13 +171,12 @@ img {
     border: 2px solid rgba(15,23,42,0.08);
     display: inline-block;
 }
-/* estilo quando marcado */
+
 .checkbox:checked + label:before {
     border: 2px solid var(--accent);
     background-color: #d1fae5;
 }
 
-/* Lista de eventos */
 .lista {
     display: flex;
     flex-direction: column;
@@ -201,7 +191,6 @@ img {
     width: 100%;
 }
 
-/* Rodapé fixo */
 .rodape {
     width: 100%;
     background: #6b7280;
@@ -215,20 +204,13 @@ img {
     border-top: 1px solid rgba(0,0,0,0.05);
 }
 
-/* --- Estilo Específico para o Nome da Matéria na Lista --- */
-/* ... (Seu código anterior para .materia-nome e .checkbox-placeholder-materia) ... */
-
-
-/* NOVO: Remove o sublinhado do link */
 .checklist-item {
-    text-decoration: none; /* Remove o sublinhado no container inteiro (que é o link) */
+    text-decoration: none; 
 }
 
-/* Opcional: Garante que o texto dentro do link também não tenha sublinhado */
 .checklist-item a {
     text-decoration: none;
 }
-/* --- Estilo Específico para o Nome da Matéria na Lista --- */
 
 .materia-nome {
     font-weight: 500; 
@@ -241,28 +223,114 @@ img {
     color: var(--primary); 
 }
 
-
-/* --- Placeholder para o "quadradinho" da Matéria (Simula o Checkbox) --- */
-
 .checkbox-placeholder-materia {
     content: '';
-    /* Usa as mesmas dimensões e estilos do checkbox original */
     width: 18px;
-    min-width: 18px; /* Adiciona min-width para não encolher */
+    min-width: 18px;
     height: 18px;
     border-radius: 6px;
-    background-color: var(--bg); /* Cor de fundo */
+    background-color: var(--bg);
     border: 2px solid rgba(15,23,42,0.08);
     display: inline-block;
 }
 
-/* Opcional: Efeito visual ao passar o mouse */
+
 .checklist-item:hover .checkbox-placeholder-materia {
     border-color: var(--primary);
     background-color: var(--card);
 }
 
-/* Responsividade: em telas menores vira 1 coluna */
+.dicionario-form {
+    display: flex;
+    gap: 8px;
+    margin-top: 12px;
+}
+
+.dicionario-input {
+    flex-grow: 1; 
+    height: 40px;
+    border: 2px solid rgba(15,23,42,0.08);
+    border-radius: 8px;
+    padding: 0 12px;
+    font-family: Inter, system-ui, sans-serif;
+    font-size: 15px;
+}
+.dicionario-input:focus {
+    outline: none;
+    border-color: var(--primary);
+}
+
+.dicionario-botao {
+    height: 40px;
+    min-width: 80px;
+    border-radius: 8px;
+    border: none;
+    background-color: var(--primary);
+    color: white;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+.dicionario-botao:hover {
+    background-color: #2563eb;
+}
+.dicionario-botao:disabled {
+    background-color: var(--muted);
+    cursor: not-allowed;
+}
+
+.dicionario-resultado {
+    margin-top: 16px;
+    padding-top: 12px;
+    border-top: 1px solid rgba(15,23,42,0.05);
+}
+
+.form-adicionar {
+    display: flex;
+    gap: 8px;
+    margin-top: 12px;
+}
+
+.lista-item-gerenciador {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.btn-acao-lista {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 4px;
+    border-radius: 6px; 
+    transition: background-color 0.2s ease;
+}
+
+.btn-acao-concluir {
+    color: var(--accent);
+    font-size: 18px;
+    font-weight: bold;
+}
+.btn-acao-concluir:hover {
+    background-color: #d1fae5; 
+}
+
+.btn-acao-remover {
+    color: #ef4444;
+    font-size: 16px;
+    font-weight: bold;
+}
+.btn-acao-remover:hover {
+    background-color: #fee2e2;
+}
+
+.btn-full-bottom {
+    width: 100%;
+    margin-top: 12px;
+    height: 35px;
+}
+
+
 @media (max-width: 900px) {
     .quadros {
         grid-template-columns: 1fr;

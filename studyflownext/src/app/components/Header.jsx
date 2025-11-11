@@ -4,13 +4,16 @@ import Link from 'next/link';
 export default function Header() {
   return (
     <header className="cabecalho">
-      <img src="/logo-triangular.png" alt="logo" />
+      <Link href="/">
+        <img src="/Logo.png" alt="StudyFlow Logo" className="header-logo" />
+      </Link>
+      
       <nav className="menu">
         <Link href="/">Dashboard</Link>
         <Link href="/materias">Minhas Matérias</Link>
-        <a>Minhas Metas</a>
-        <a>Estatisticas</a>
-        <a><img src="/usuario-de-perfil.png" alt="Perfil" /></a>
+        <a className="perfil-link">
+          <img src="/Perfil.png" alt="Perfil" className="perfil-icone" />
+        </a>
       </nav>
     </header>
   );
