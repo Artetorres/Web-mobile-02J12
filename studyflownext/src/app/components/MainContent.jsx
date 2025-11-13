@@ -18,9 +18,6 @@ export default function MainContent() {
   const concluidasTarefas = tarefas.filter(t => t.concluida).length;
   const totalMetas = metas.length;
   const concluidasMetas = metas.filter(m => m.concluida).length;
-
-  
-  const estatisticasRef = useRef(null); 
   
   const contadorTarefasRef = useRef(0);
   const contadorMetasRef = useRef(0);
@@ -28,73 +25,48 @@ export default function MainContent() {
   const handleAdicionarItem = () => {
     const escolha = prompt("Adicionar em: Tarefas ou Metas ?");
     if (!escolha) return;
-
     const texto = prompt("Digite a tarefa ou meta:");
     if (!texto) return;
-    
     const tipo = escolha.toLowerCase();
     
     if (tipo === "tarefas") {
       contadorTarefasRef.current++;
-      const novoItem = {
-        id: `tarefa-${contadorTarefasRef.current}`,
-        texto: texto,
-        concluida: false
-      };
+      const novoItem = { id: `tarefa-${contadorTarefasRef.current}`, texto: texto, concluida: false };
       setTarefas(prev => [...prev, novoItem]);
     } else if (tipo === "metas") {
       contadorMetasRef.current++;
-      const novoItem = {
-        id: `meta-${contadorMetasRef.current}`,
-        texto: texto,
-        concluida: false
-      };
+      const novoItem = { id: `meta-${contadorMetasRef.current}`, texto: texto, concluida: false };
       setMetas(prev => [...prev, novoItem]);
     } else {
       alert("Opção inválida.");
     }
   };
   
-
   const handleConcluirItem = (id, tipo) => {
     if (tipo === 'tarefas') {
-      setTarefas(prev => 
-        prev.map(t => t.id === id ? { ...t, concluida: !t.concluida } : t)
-      );
+      setTarefas(prev => prev.map(t => t.id === id ? { ...t, concluida: !t.concluida } : t));
     } else if (tipo === 'metas') {
-      setMetas(prev => 
-        prev.map(m => m.id === id ? { ...m, concluida: !m.concluida } : m)
-      );
+      setMetas(prev => prev.map(m => m.id === id ? { ...m, concluida: !m.concluida } : m));
     }
   };
 
   const handleSearchDicionario = async (e) => {
     e.preventDefault();
     if (!searchTerm) return;
-
     setDictLoading(true);
     setSearchResult(null);
     setDictError(null);
-
     try {
       const response = await fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${searchTerm}`);
-      if (!response.ok) {
-        throw new Error('Palavra não encontrada ou falha na rede.');
-      }
+      if (!response.ok) throw new Error('Palavra não encontrada ou falha na rede.');
       const data = await response.json();
       const definicao = data[0]?.meanings[0]?.definitions[0]?.definition;
       const fonetica = data[0]?.phonetic;
-
       if (definicao) {
-        setSearchResult({
-          palavra: data[0].word,
-          definicao: definicao,
-          fonetica: fonetica
-        });
+        setSearchResult({ palavra: data[0].word, definicao: definicao, fonetica: fonetica });
       } else {
         throw new Error('Definição não encontrada na resposta.');
       }
-
     } catch (error) {
       setDictError(error.message);
     } finally {
@@ -111,12 +83,14 @@ export default function MainContent() {
         checked={item.concluida} 
         onChange={() => onConcluir(item.id, tipo)}
       />
-      <label htmlFor={item.id} style={item.concluida ? { textDecoration: 'line-through', color: '#9ca3af' } : {}}>
+      <label 
+        htmlFor={item.id} 
+        className={item.concluida ? 'checklist-label-concluido' : ''}
+      >
         {item.texto}
       </label>
     </div>
   );
-
 
   return (
     <section>
@@ -134,12 +108,7 @@ export default function MainContent() {
                     <h3 className="subtitulo">Hoje <span className="escondido">• {totalTarefas} Tarefas</span></h3>
                     <form className="checklist" id="lista-tarefas">
                       {tarefas.map(t => (
-                        <CheckListItem 
-                          key={t.id} 
-                          item={t} 
-                          tipo="tarefas" 
-                          onConcluir={handleConcluirItem} 
-                        />
+                        <CheckListItem key={t.id} item={t} tipo="tarefas" onConcluir={handleConcluirItem} />
                       ))}
                     </form>
                 </section>
@@ -148,19 +117,14 @@ export default function MainContent() {
                     <h3 className="subtitulo">Metas</h3>
                     <form className="checklist" id="lista-metas">
                       {metas.map(m => (
-                        <CheckListItem 
-                          key={m.id} 
-                          item={m} 
-                          tipo="metas" 
-                          onConcluir={handleConcluirItem} 
-                        />
+                        <CheckListItem key={m.id} item={m} tipo="metas" onConcluir={handleConcluirItem} />
                       ))}
                     </form>
                 </section>
                 
                 <section className="quadro-direita">
                     <h3 className="subtitulo">Estatisticas</h3>
-                    <div className="lista" ref={estatisticasRef} id="lista-eventos">
+                    <div className="lista" id="lista-eventos">
                         <ProgressBar
                             titulo="Progresso - Tarefas"
                             total={totalTarefas}
@@ -195,16 +159,14 @@ export default function MainContent() {
                     
                     <div className="dicionario-resultado">
                         {dictLoading && <p>Carregando...</p>}
-                        {dictError && <p style={{ color: 'red' }}>{dictError}</p>}
+                        {dictError && <p className="dicionario-erro">{dictError}</p>}
                         {searchResult && (
                             <>
-                                <h4 style={{ margin: '10px 0 5px' }}>
+                                <h4>
                                   {searchResult.palavra} 
-                                  <span style={{ color: '#6b7280', fontWeight: '500', marginLeft: '8px' }}>
-                                    {searchResult.fonetica}
-                                  </span>
+                                  <span>{searchResult.fonetica}</span>
                                 </h4>
-                                <p style={{ margin: 0 }}>{searchResult.definicao}</p>
+                                <p>{searchResult.definicao}</p>
                             </>
                         )}
                     </div>
