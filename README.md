@@ -95,7 +95,101 @@ O projeto implementa rotas dinâmicas para o gerenciamento individual de cada ma
 
 * Isso permite que cada página de matéria armazene e gerencie seus próprios tópicos e avaliações de forma isolada.
 
-## 5. Grupo
+## 5. Vantagens do ReactJS
+
+## 5.1 Reutilização de componentes
+
+Você cria um componente uma vez (Header, Footer, Botão, Card, Barra de Progresso…)
+E usa em todas as páginas sem copiar código.
+
+Isso reduz:
+
+* código duplicado
+
+* bugs repetidos
+
+* retrabalho em manutenções
+
+## 5.2 Separação clara de responsabilidades
+
+Em vez de ter páginas com HTML gigante e misturado, cada parte vira um componente organizado.
+
+Isso deixa o projeto:
+
+* mais limpo
+
+* mais modular
+
+* mais fácil de entender
+
+## 5.3 Atualizações fáceis
+
+Se você muda um componente (ex: troca a cor do Header), todas as páginas atualizam automaticamente.
+
+Isso garante:
+
+* consistência visual
+
+* estilos padronizados
+
+* ajustes rápidos
+
+## 5.4 Facilita integração com dados dinâmicos
+
+React torna simples exibir listas, progresso, estatísticas, inputs, coisas que mudam com frequência.
+
+Tudo pode ser atualizado com:
+
+* setState()
+
+
+* ou
+
+* useState(), useEffect()
+
+## 5.5 Melhor manutenção a longo prazo
+
+Com componentes bem separados, corrigir bugs e adicionar novas features se torna muito mais rápido.
+
+É uma base melhor para:
+
+* dashboard evoluir
+
+* adicionar banco de dados no futuro
+
+* criar autenticação
+
+* migrar para backend real
+
+## 5.6 Facilita testes
+
+Componentes pequenos = testes independentes.
+Isso melhora a qualidade do software.
+
+## 5.7 Aproveita o ecossistema do Next.js
+
+Usar React é usar:
+
+* otimização automática
+
+* navegação pré-carregada
+
+* renderização híbrida (SSR/CSR)
+
+* layouts automáticos
+
+## 5.8 Performance otimizada
+
+React só atualiza o que muda, não recarrega a página inteira.
+Isso deixa a interface mais:
+
+* rápida
+
+* fluida
+
+* responsiva
+
+## 6. Grupo
 
 João Henrique Pereira Amaral - RA: 10737510\
 Heitor Assis Duenhas - RA: 10739294\
